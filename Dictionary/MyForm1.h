@@ -85,11 +85,14 @@ namespace Dictionary {
 			this->button1->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->button1->Font = (gcnew System::Drawing::Font(L"Imprint MT Shadow", 24, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->button1->Location = System::Drawing::Point(207, 125);
+			this->button1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button1.Image")));
+			this->button1->Location = System::Drawing::Point(187, 123);
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(176, 56);
+			this->button1->Size = System::Drawing::Size(205, 56);
 			this->button1->TabIndex = 1;
 			this->button1->Text = L"Search";
+			this->button1->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
+			this->button1->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &MyForm1::button1_Click);
 			// 
@@ -98,11 +101,14 @@ namespace Dictionary {
 			this->button2->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->button2->Font = (gcnew System::Drawing::Font(L"Imprint MT Shadow", 24, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->button2->Location = System::Drawing::Point(207, 205);
+			this->button2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button2.Image")));
+			this->button2->Location = System::Drawing::Point(187, 203);
 			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(176, 56);
+			this->button2->Size = System::Drawing::Size(205, 56);
 			this->button2->TabIndex = 2;
 			this->button2->Text = L"Add";
+			this->button2->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
+			this->button2->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
 			this->button2->UseVisualStyleBackColor = true;
 			// 
 			// button3
@@ -110,11 +116,14 @@ namespace Dictionary {
 			this->button3->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->button3->Font = (gcnew System::Drawing::Font(L"Imprint MT Shadow", 24, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->button3->Location = System::Drawing::Point(207, 285);
+			this->button3->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button3.Image")));
+			this->button3->Location = System::Drawing::Point(187, 284);
 			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(176, 56);
+			this->button3->Size = System::Drawing::Size(205, 56);
 			this->button3->TabIndex = 3;
 			this->button3->Text = L"Delete";
+			this->button3->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
+			this->button3->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
 			this->button3->UseVisualStyleBackColor = true;
 			// 
 			// button4
@@ -122,23 +131,31 @@ namespace Dictionary {
 			this->button4->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->button4->Font = (gcnew System::Drawing::Font(L"Imprint MT Shadow", 24, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->button4->Location = System::Drawing::Point(207, 365);
+			this->button4->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button4.Image")));
+			this->button4->Location = System::Drawing::Point(187, 362);
 			this->button4->Name = L"button4";
-			this->button4->Size = System::Drawing::Size(176, 56);
+			this->button4->Size = System::Drawing::Size(205, 56);
 			this->button4->TabIndex = 4;
 			this->button4->Text = L"Edit";
+			this->button4->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
+			this->button4->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
 			this->button4->UseVisualStyleBackColor = true;
 			// 
 			// button5
 			// 
 			this->button5->Anchor = System::Windows::Forms::AnchorStyles::None;
+			this->button5->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button5.BackgroundImage")));
+			this->button5->FlatAppearance->BorderSize = 0;
 			this->button5->Font = (gcnew System::Drawing::Font(L"Imprint MT Shadow", 24, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->button5->Location = System::Drawing::Point(207, 445);
+			this->button5->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button5.Image")));
+			this->button5->Location = System::Drawing::Point(187, 441);
 			this->button5->Name = L"button5";
-			this->button5->Size = System::Drawing::Size(176, 56);
+			this->button5->Size = System::Drawing::Size(205, 56);
 			this->button5->TabIndex = 5;
 			this->button5->Text = L"Exit";
+			this->button5->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
+			this->button5->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
 			this->button5->UseVisualStyleBackColor = true;
 			// 
 			// MyForm1

@@ -64,7 +64,7 @@ namespace Dictionary {
 				static_cast<System::Byte>(238)));
 			this->textBox1->Location = System::Drawing::Point(12, 89);
 			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(419, 45);
+			this->textBox1->Size = System::Drawing::Size(398, 45);
 			this->textBox1->TabIndex = 0;
 			// 
 			// label1
@@ -75,7 +75,7 @@ namespace Dictionary {
 				static_cast<System::Byte>(0)));
 			this->label1->Location = System::Drawing::Point(5, 34);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(242, 39);
+			this->label1->Size = System::Drawing::Size(233, 38);
 			this->label1->TabIndex = 1;
 			this->label1->Text = L"Enter a word:";
 			// 
@@ -83,11 +83,14 @@ namespace Dictionary {
 			// 
 			this->button1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->button1->Location = System::Drawing::Point(457, 89);
+			this->button1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button1.Image")));
+			this->button1->Location = System::Drawing::Point(429, 89);
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(113, 45);
+			this->button1->Size = System::Drawing::Size(151, 45);
 			this->button1->TabIndex = 2;
 			this->button1->Text = L"Search";
+			this->button1->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
+			this->button1->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
 			this->button1->UseVisualStyleBackColor = true;
 			// 
 			// MyForm2
@@ -101,7 +104,7 @@ namespace Dictionary {
 			this->Controls->Add(this->textBox1);
 			this->MinimumSize = System::Drawing::Size(600, 600);
 			this->Name = L"MyForm2";
-			this->Text = L"MyForm2";
+			this->Text = L"Search";
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
