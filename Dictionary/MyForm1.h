@@ -186,9 +186,8 @@ namespace Dictionary {
 	}
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 		MyForm2^ myform2 = gcnew MyForm2;
-		MyForm1::Hide();
+		//MyForm1::Hide();
 		myform2->ShowDialog();
-		
 	}
 };
 }
