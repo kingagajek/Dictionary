@@ -1,5 +1,8 @@
 #pragma once
 #include "MyForm2.h"
+#include "MyForm3.h"
+#include "MyForm4.h"
+#include "MyForm5.h"
 
 namespace Dictionary {
 
@@ -110,6 +113,7 @@ namespace Dictionary {
 			this->button2->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
 			this->button2->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
 			this->button2->UseVisualStyleBackColor = true;
+			this->button2->Click += gcnew System::EventHandler(this, &MyForm1::button2_Click);
 			// 
 			// button3
 			// 
@@ -125,6 +129,7 @@ namespace Dictionary {
 			this->button3->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
 			this->button3->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
 			this->button3->UseVisualStyleBackColor = true;
+			this->button3->Click += gcnew System::EventHandler(this, &MyForm1::button3_Click);
 			// 
 			// button4
 			// 
@@ -140,6 +145,7 @@ namespace Dictionary {
 			this->button4->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
 			this->button4->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
 			this->button4->UseVisualStyleBackColor = true;
+			this->button4->Click += gcnew System::EventHandler(this, &MyForm1::button4_Click);
 			// 
 			// button5
 			// 
@@ -157,6 +163,7 @@ namespace Dictionary {
 			this->button5->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
 			this->button5->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
 			this->button5->UseVisualStyleBackColor = true;
+			this->button5->Click += gcnew System::EventHandler(this, &MyForm1::button5_Click);
 			// 
 			// MyForm1
 			// 
@@ -188,6 +195,21 @@ namespace Dictionary {
 		MyForm2^ myform2 = gcnew MyForm2;
 		//MyForm1::Hide();
 		myform2->ShowDialog();
+	}
+	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
+		MyForm3^ myform3 = gcnew MyForm3;
+		myform3->ShowDialog();
+	}
+	private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
+		MyForm4^ myform4 = gcnew MyForm4;
+		myform4->ShowDialog();
+	}
+	private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) {
+		MyForm5^ myform5 = gcnew MyForm5;
+		myform5->ShowDialog();
+	}
+	private: System::Void button5_Click(System::Object^ sender, System::EventArgs^ e) {
+		MyForm1::Close();
 	}
 };
 }

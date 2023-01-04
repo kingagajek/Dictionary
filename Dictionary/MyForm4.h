@@ -10,12 +10,12 @@ namespace Dictionary {
 	using namespace System::Drawing;
 
 	/// <summary>
-	/// Podsumowanie informacji o MyForm2
+	/// Podsumowanie informacji o MyForm4
 	/// </summary>
-	public ref class MyForm2 : public System::Windows::Forms::Form
+	public ref class MyForm4 : public System::Windows::Forms::Form
 	{
 	public:
-		MyForm2(void)
+		MyForm4(void)
 		{
 			InitializeComponent();
 			//
@@ -27,15 +27,15 @@ namespace Dictionary {
 		/// <summary>
 		/// Wyczyœæ wszystkie u¿ywane zasoby.
 		/// </summary>
-		~MyForm2()
+		~MyForm4()
 		{
 			if (components)
 			{
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::TextBox^ textBox1;
 	private: System::Windows::Forms::Label^ label1;
+	private: System::Windows::Forms::TextBox^ textBox1;
 	private: System::Windows::Forms::Button^ button1;
 	private: System::Windows::Forms::Button^ button2;
 	protected:
@@ -53,21 +53,12 @@ namespace Dictionary {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm2::typeid));
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm4::typeid));
 			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
-			// 
-			// textBox1
-			// 
-			this->textBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 19.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(238)));
-			this->textBox1->Location = System::Drawing::Point(12, 89);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(398, 45);
-			this->textBox1->TabIndex = 0;
 			// 
 			// label1
 			// 
@@ -77,9 +68,19 @@ namespace Dictionary {
 				static_cast<System::Byte>(0)));
 			this->label1->Location = System::Drawing::Point(5, 34);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(233, 38);
-			this->label1->TabIndex = 1;
-			this->label1->Text = L"Enter a word:";
+			this->label1->Size = System::Drawing::Size(383, 38);
+			this->label1->TabIndex = 2;
+			this->label1->Text = L"Enter a word to delete:";
+			// 
+			// textBox1
+			// 
+			this->textBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 19.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->textBox1->Location = System::Drawing::Point(12, 89);
+			this->textBox1->Name = L"textBox1";
+			this->textBox1->Size = System::Drawing::Size(398, 45);
+			this->textBox1->TabIndex = 3;
+			this->textBox1->TextChanged += gcnew System::EventHandler(this, &MyForm4::textBox1_TextChanged);
 			// 
 			// button1
 			// 
@@ -89,8 +90,8 @@ namespace Dictionary {
 			this->button1->Location = System::Drawing::Point(429, 89);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(151, 45);
-			this->button1->TabIndex = 2;
-			this->button1->Text = L"Search";
+			this->button1->TabIndex = 4;
+			this->button1->Text = L"Delete";
 			this->button1->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
 			this->button1->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
 			this->button1->UseVisualStyleBackColor = true;
@@ -106,14 +107,14 @@ namespace Dictionary {
 			this->button2->Location = System::Drawing::Point(450, 509);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(130, 46);
-			this->button2->TabIndex = 3;
+			this->button2->TabIndex = 5;
 			this->button2->Text = L"Back";
 			this->button2->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
 			this->button2->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
 			this->button2->UseVisualStyleBackColor = false;
-			this->button2->Click += gcnew System::EventHandler(this, &MyForm2::button2_Click);
+			this->button2->Click += gcnew System::EventHandler(this, &MyForm4::button2_Click);
 			// 
-			// MyForm2
+			// MyForm4
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
@@ -121,18 +122,20 @@ namespace Dictionary {
 			this->ClientSize = System::Drawing::Size(582, 553);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->button1);
-			this->Controls->Add(this->label1);
 			this->Controls->Add(this->textBox1);
+			this->Controls->Add(this->label1);
 			this->MinimumSize = System::Drawing::Size(600, 600);
-			this->Name = L"MyForm2";
-			this->Text = L"Search";
+			this->Name = L"MyForm4";
+			this->Text = L"Delete";
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
 	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
-		MyForm2::Close();
+		MyForm4::Close();
 	}
+private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+}
 };
 }
