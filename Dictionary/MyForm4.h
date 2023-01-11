@@ -36,8 +36,10 @@ namespace Dictionary {
 		}
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::TextBox^ textBox1;
-	private: System::Windows::Forms::Button^ button1;
-	private: System::Windows::Forms::Button^ button2;
+	private: System::Windows::Forms::Button^ buttonDelete;
+	private: System::Windows::Forms::Button^ buttonBack;
+
+
 	protected:
 
 	private:
@@ -56,8 +58,8 @@ namespace Dictionary {
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm4::typeid));
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
-			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->button2 = (gcnew System::Windows::Forms::Button());
+			this->buttonDelete = (gcnew System::Windows::Forms::Button());
+			this->buttonBack = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// label1
@@ -82,37 +84,38 @@ namespace Dictionary {
 			this->textBox1->TabIndex = 3;
 			this->textBox1->TextChanged += gcnew System::EventHandler(this, &MyForm4::textBox1_TextChanged);
 			// 
-			// button1
+			// buttonDelete
 			// 
-			this->button1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->buttonDelete->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->button1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button1.Image")));
-			this->button1->Location = System::Drawing::Point(429, 89);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(151, 45);
-			this->button1->TabIndex = 4;
-			this->button1->Text = L"Delete";
-			this->button1->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
-			this->button1->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
-			this->button1->UseVisualStyleBackColor = true;
+			this->buttonDelete->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"buttonDelete.Image")));
+			this->buttonDelete->Location = System::Drawing::Point(429, 89);
+			this->buttonDelete->Name = L"buttonDelete";
+			this->buttonDelete->Size = System::Drawing::Size(151, 45);
+			this->buttonDelete->TabIndex = 4;
+			this->buttonDelete->Text = L"Delete";
+			this->buttonDelete->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
+			this->buttonDelete->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
+			this->buttonDelete->UseVisualStyleBackColor = true;
+			this->buttonDelete->Click += gcnew System::EventHandler(this, &MyForm4::buttonDelete_Click);
 			// 
-			// button2
+			// buttonBack
 			// 
-			this->button2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
-			this->button2->BackColor = System::Drawing::SystemColors::Control;
-			this->button2->FlatAppearance->BorderSize = 0;
-			this->button2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->buttonBack->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
+			this->buttonBack->BackColor = System::Drawing::SystemColors::Control;
+			this->buttonBack->FlatAppearance->BorderSize = 0;
+			this->buttonBack->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->button2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button2.Image")));
-			this->button2->Location = System::Drawing::Point(450, 509);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(130, 46);
-			this->button2->TabIndex = 5;
-			this->button2->Text = L"Back";
-			this->button2->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
-			this->button2->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
-			this->button2->UseVisualStyleBackColor = false;
-			this->button2->Click += gcnew System::EventHandler(this, &MyForm4::button2_Click);
+			this->buttonBack->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"buttonBack.Image")));
+			this->buttonBack->Location = System::Drawing::Point(450, 509);
+			this->buttonBack->Name = L"buttonBack";
+			this->buttonBack->Size = System::Drawing::Size(130, 46);
+			this->buttonBack->TabIndex = 5;
+			this->buttonBack->Text = L"Back";
+			this->buttonBack->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
+			this->buttonBack->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
+			this->buttonBack->UseVisualStyleBackColor = false;
+			this->buttonBack->Click += gcnew System::EventHandler(this, &MyForm4::buttonBack_Click);
 			// 
 			// MyForm4
 			// 
@@ -120,22 +123,26 @@ namespace Dictionary {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->ClientSize = System::Drawing::Size(582, 553);
-			this->Controls->Add(this->button2);
-			this->Controls->Add(this->button1);
+			this->Controls->Add(this->buttonBack);
+			this->Controls->Add(this->buttonDelete);
 			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->label1);
 			this->MinimumSize = System::Drawing::Size(600, 600);
 			this->Name = L"MyForm4";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Delete";
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
-	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void buttonBack_Click(System::Object^ sender, System::EventArgs^ e) {
 		MyForm4::Close();
 	}
 private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+
 }
+	private: System::Void buttonDelete_Click(System::Object^ sender, System::EventArgs^ e) {
+	}
 };
 }

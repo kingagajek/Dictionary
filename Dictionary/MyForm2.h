@@ -1,5 +1,8 @@
 #pragma once
 
+#include <Windows.h>
+//#include <System.Windows.Forms.h>
+
 namespace Dictionary {
 
 	using namespace System;
@@ -36,8 +39,11 @@ namespace Dictionary {
 		}
 	private: System::Windows::Forms::TextBox^ textBox1;
 	private: System::Windows::Forms::Label^ label1;
-	private: System::Windows::Forms::Button^ button1;
-	private: System::Windows::Forms::Button^ button2;
+	private: System::Windows::Forms::Button^ buttonSearch;
+	private: System::Windows::Forms::Button^ buttonBack;
+	private: System::Windows::Forms::Label^ label2;
+
+
 	protected:
 
 	private:
@@ -56,8 +62,9 @@ namespace Dictionary {
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm2::typeid));
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->button2 = (gcnew System::Windows::Forms::Button());
+			this->buttonSearch = (gcnew System::Windows::Forms::Button());
+			this->buttonBack = (gcnew System::Windows::Forms::Button());
+			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// textBox1
@@ -81,37 +88,47 @@ namespace Dictionary {
 			this->label1->TabIndex = 1;
 			this->label1->Text = L"Enter a word:";
 			// 
-			// button1
+			// buttonSearch
 			// 
-			this->button1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->buttonSearch->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->button1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button1.Image")));
-			this->button1->Location = System::Drawing::Point(429, 89);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(151, 45);
-			this->button1->TabIndex = 2;
-			this->button1->Text = L"Search";
-			this->button1->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
-			this->button1->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
-			this->button1->UseVisualStyleBackColor = true;
+			this->buttonSearch->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"buttonSearch.Image")));
+			this->buttonSearch->Location = System::Drawing::Point(429, 89);
+			this->buttonSearch->Name = L"buttonSearch";
+			this->buttonSearch->Size = System::Drawing::Size(151, 45);
+			this->buttonSearch->TabIndex = 2;
+			this->buttonSearch->Text = L"Search";
+			this->buttonSearch->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
+			this->buttonSearch->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
+			this->buttonSearch->UseVisualStyleBackColor = true;
+			this->buttonSearch->Click += gcnew System::EventHandler(this, &MyForm2::buttonSearch_Click);
 			// 
-			// button2
+			// buttonBack
 			// 
-			this->button2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
-			this->button2->BackColor = System::Drawing::SystemColors::Control;
-			this->button2->FlatAppearance->BorderSize = 0;
-			this->button2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->buttonBack->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
+			this->buttonBack->BackColor = System::Drawing::SystemColors::Control;
+			this->buttonBack->FlatAppearance->BorderSize = 0;
+			this->buttonBack->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->button2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button2.Image")));
-			this->button2->Location = System::Drawing::Point(450, 509);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(130, 46);
-			this->button2->TabIndex = 3;
-			this->button2->Text = L"Back";
-			this->button2->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
-			this->button2->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
-			this->button2->UseVisualStyleBackColor = false;
-			this->button2->Click += gcnew System::EventHandler(this, &MyForm2::button2_Click);
+			this->buttonBack->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"buttonBack.Image")));
+			this->buttonBack->Location = System::Drawing::Point(450, 509);
+			this->buttonBack->Name = L"buttonBack";
+			this->buttonBack->Size = System::Drawing::Size(130, 46);
+			this->buttonBack->TabIndex = 3;
+			this->buttonBack->Text = L"Back";
+			this->buttonBack->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
+			this->buttonBack->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
+			this->buttonBack->UseVisualStyleBackColor = false;
+			this->buttonBack->Click += gcnew System::EventHandler(this, &MyForm2::buttonBack_Click);
+			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->Location = System::Drawing::Point(21, 187);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(44, 16);
+			this->label2->TabIndex = 4;
+			this->label2->Text = L"label2";
 			// 
 			// MyForm2
 			// 
@@ -119,20 +136,87 @@ namespace Dictionary {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->ClientSize = System::Drawing::Size(582, 553);
-			this->Controls->Add(this->button2);
-			this->Controls->Add(this->button1);
+			this->Controls->Add(this->label2);
+			this->Controls->Add(this->buttonBack);
+			this->Controls->Add(this->buttonSearch);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->textBox1);
 			this->MinimumSize = System::Drawing::Size(600, 600);
 			this->Name = L"MyForm2";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Search";
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
-	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void buttonBack_Click(System::Object^ sender, System::EventArgs^ e) {
 		MyForm2::Close();
 	}
+	private: System::Void buttonSearch_Click(System::Object^ sender, System::EventArgs^ e) {
+		/*
+		// Get the text from the TextBox.
+		System::String^ text = textBox1->Text;
+
+		// Search for the word in the file.
+		System::String^ result = SearchForWord(text);
+
+		// Display the result in the label.
+		label2->Text = result; */
+
+		String^ word;
+		// Get the word entered in the TextBox
+		word = textBox1->Text;
+
+		// Read the dictionary file line by line
+		System::IO::StreamReader^ sr = gcnew System::IO::StreamReader("DataDictionary.txt");
+		String^ line;
+
+		// Search for the word in the dictionary
+		while ((line = sr->ReadLine()) != nullptr)
+		{
+			// If the word is found, display a message
+			if (line->Contains(word))
+			{
+				MessageBox::Show("Word found in dictionary");
+				break;
+			}
+		}
+
+		// If the word is not found, display a message
+		if (line == nullptr)
+			MessageBox::Show("Word not found in dictionary");
+
+		// Close the StreamReader
+		delete sr;
+
+	}
+
+	    System::String^ SearchForWord(System::String^ text)
+    {
+        // Open the file and search for the word.
+        // (Implementation omitted for brevity)
+//Open the file using a StreamReader
+			/*
+			System::IO::StreamReader^ sr = gcnew System::IO::StreamReader("DataDictionary.txt");
+
+			//Read the file contents into a string
+			String^ fileContents = sr->ReadToEnd();
+
+			//Search for the word
+			int index = fileContents->IndexOf("word");
+
+			//Check if the word was found
+			if (index >= 0)
+			{
+				return "Word was found";
+			}
+			else
+			{
+				return "Word was not found";
+			} */
+			return "koniec";
+			
+    }
 };
 }

@@ -34,10 +34,13 @@ namespace Dictionary {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::Button^ button2;
+	private: System::Windows::Forms::Button^ buttonBack;
+	protected:
+
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::TextBox^ textBox1;
-	private: System::Windows::Forms::Button^ button1;
+	private: System::Windows::Forms::Button^ buttonEdit;
+
 	protected:
 
 	private:
@@ -54,29 +57,29 @@ namespace Dictionary {
 		void InitializeComponent(void)
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm5::typeid));
-			this->button2 = (gcnew System::Windows::Forms::Button());
+			this->buttonBack = (gcnew System::Windows::Forms::Button());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
-			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->buttonEdit = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
-			// button2
+			// buttonBack
 			// 
-			this->button2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
-			this->button2->BackColor = System::Drawing::SystemColors::Control;
-			this->button2->FlatAppearance->BorderSize = 0;
-			this->button2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->buttonBack->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
+			this->buttonBack->BackColor = System::Drawing::SystemColors::Control;
+			this->buttonBack->FlatAppearance->BorderSize = 0;
+			this->buttonBack->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->button2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button2.Image")));
-			this->button2->Location = System::Drawing::Point(450, 509);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(130, 46);
-			this->button2->TabIndex = 6;
-			this->button2->Text = L"Back";
-			this->button2->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
-			this->button2->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
-			this->button2->UseVisualStyleBackColor = false;
-			this->button2->Click += gcnew System::EventHandler(this, &MyForm5::button2_Click);
+			this->buttonBack->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"buttonBack.Image")));
+			this->buttonBack->Location = System::Drawing::Point(450, 509);
+			this->buttonBack->Name = L"buttonBack";
+			this->buttonBack->Size = System::Drawing::Size(130, 46);
+			this->buttonBack->TabIndex = 6;
+			this->buttonBack->Text = L"Back";
+			this->buttonBack->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
+			this->buttonBack->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
+			this->buttonBack->UseVisualStyleBackColor = false;
+			this->buttonBack->Click += gcnew System::EventHandler(this, &MyForm5::buttonBack_Click);
 			// 
 			// label1
 			// 
@@ -99,19 +102,20 @@ namespace Dictionary {
 			this->textBox1->Size = System::Drawing::Size(398, 45);
 			this->textBox1->TabIndex = 8;
 			// 
-			// button1
+			// buttonEdit
 			// 
-			this->button1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->buttonEdit->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 13.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(238)));
-			this->button1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button1.Image")));
-			this->button1->Location = System::Drawing::Point(429, 89);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(151, 45);
-			this->button1->TabIndex = 9;
-			this->button1->Text = L"Edit";
-			this->button1->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
-			this->button1->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
-			this->button1->UseVisualStyleBackColor = true;
+			this->buttonEdit->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"buttonEdit.Image")));
+			this->buttonEdit->Location = System::Drawing::Point(429, 89);
+			this->buttonEdit->Name = L"buttonEdit";
+			this->buttonEdit->Size = System::Drawing::Size(151, 45);
+			this->buttonEdit->TabIndex = 9;
+			this->buttonEdit->Text = L"Edit";
+			this->buttonEdit->TextAlign = System::Drawing::ContentAlignment::MiddleRight;
+			this->buttonEdit->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
+			this->buttonEdit->UseVisualStyleBackColor = true;
+			this->buttonEdit->Click += gcnew System::EventHandler(this, &MyForm5::buttonEdit_Click);
 			// 
 			// MyForm5
 			// 
@@ -119,20 +123,23 @@ namespace Dictionary {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->ClientSize = System::Drawing::Size(582, 553);
-			this->Controls->Add(this->button1);
+			this->Controls->Add(this->buttonEdit);
 			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->label1);
-			this->Controls->Add(this->button2);
+			this->Controls->Add(this->buttonBack);
 			this->MinimumSize = System::Drawing::Size(600, 600);
 			this->Name = L"MyForm5";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Edit";
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
-	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void buttonBack_Click(System::Object^ sender, System::EventArgs^ e) {
 		MyForm5::Close();
+	}
+	private: System::Void buttonEdit_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
 };
 }

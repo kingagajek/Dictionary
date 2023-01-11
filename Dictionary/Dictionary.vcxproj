@@ -162,6 +162,12 @@
       <DependentUpon>MyForm5.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="SQLDictionary.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="DataDictionary.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

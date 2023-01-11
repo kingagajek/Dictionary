@@ -1,0 +1,8 @@
+bed - lozko
+mouth - usta
+head - glowa
+dog - pies
+hand - rêka
+eyes - oczy
+phone - telefon
+fork - widelec
