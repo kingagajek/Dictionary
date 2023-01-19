@@ -9,63 +9,62 @@ namespace Dictionary {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
-
 	using namespace System::Data::OleDb;
 
 
-	/// <summary>
-	/// Podsumowanie informacji o MyForm5
-	/// </summary>
 	public ref class MyForm5 : public System::Windows::Forms::Form
 	{
 	public:
 		MyForm5(void)
 		{
 			InitializeComponent();
-			//
-			//TODO: W tym miejscu dodaj kod konstruktora
-			//
 		}
 
 	protected:
-		/// <summary>
-		/// Wyczyœæ wszystkie u¿ywane zasoby.
-		/// </summary>
 		~MyForm5()
 		{
 			if (components)
 			{
 				delete components;
+				delete label1;
+				delete textBox1;
+				delete buttonEdit;
+				delete buttonSearch;
+				delete textBox2;
+				delete label2;
+				delete label3;
+				delete textBox3;
+				delete button1Clean;
+				delete button2Clean;
+				delete button3Clean;
+				delete buttonBack;
 			}
 		}
-	private: System::Windows::Forms::Button^ buttonBack;
-	protected:
 
-	private: System::Windows::Forms::Label^ label1;
-	private: System::Windows::Forms::TextBox^ textBox1;
-	private: System::Windows::Forms::Button^ buttonEdit;
-	private: System::Windows::Forms::Button^ buttonSearch;
-	private: System::Windows::Forms::TextBox^ textBox2;
-	private: System::Windows::Forms::Label^ label2;
-	private: System::Windows::Forms::Label^ label3;
-	private: System::Windows::Forms::TextBox^ textBox3;
-	private: System::Windows::Forms::Button^ button1Clean;
-	private: System::Windows::Forms::Button^ button2Clean;
-	private: System::Windows::Forms::Button^ button3Clean;
+	private: 
+		System::Windows::Forms::Label^ label1;
+		System::Windows::Forms::TextBox^ textBox1;
+		System::Windows::Forms::Button^ buttonEdit;
+		System::Windows::Forms::Button^ buttonSearch;
+		System::Windows::Forms::TextBox^ textBox2;
+		System::Windows::Forms::Label^ label2;
+		System::Windows::Forms::Label^ label3;
+		System::Windows::Forms::TextBox^ textBox3;
+		System::Windows::Forms::Button^ button1Clean;
+		System::Windows::Forms::Button^ button2Clean;
+		System::Windows::Forms::Button^ button3Clean;
+		System::Windows::Forms::Button^ buttonBack;
+		System::ComponentModel::Container^ components;
 
-	protected:
+		System::Void buttonBack_Click(System::Object^ sender, System::EventArgs^ e);
+		System::Void buttonEdit_Click(System::Object^ sender, System::EventArgs^ e);
+		System::Void buttonSearch_Click(System::Object^ sender, System::EventArgs^ e);
+		System::Void button1Clean_Click(System::Object^ sender, System::EventArgs^ e);
+		System::Void button2Clean_Click(System::Object^ sender, System::EventArgs^ e);
+		System::Void button3Clean_Click(System::Object^ sender, System::EventArgs^ e);
 
-	private:
-		/// <summary>
-		/// Wymagana zmienna projektanta.
-		/// </summary>
-		System::ComponentModel::Container ^components;
 
 #pragma region Windows Form Designer generated code
-		/// <summary>
-		/// Metoda wymagana do obs³ugi projektanta — nie nale¿y modyfikowaæ
-		/// jej zawartoœci w edytorze kodu.
-		/// </summary>
 		void InitializeComponent(void)
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm5::typeid));
@@ -249,111 +248,5 @@ namespace Dictionary {
 
 		}
 #pragma endregion
-	private: System::Void buttonBack_Click(System::Object^ sender, System::EventArgs^ e) 
-	{
-		MyForm5::Close();
-	}
-	private: System::Void buttonEdit_Click(System::Object^ sender, System::EventArgs^ e) 
-	{
-		String^ textSearch = this->textBox1->Text;
-		String^ textWord = this->textBox2->Text;
-		String^ textDefinition = this->textBox3->Text;
-		
-		//Create a connection to the database
-		String^ connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\\Users\\Kinia\\OneDrive\\Pulpit\\Dictionary\\Dictionary\\DataDictionary.accdb";
-		OleDbConnection^ connection = gcnew OleDbConnection(connectionString);
-		connection->Open();
-
-		OleDbCommand^ command = gcnew OleDbCommand("SELECT ID FROM Table1 WHERE Word = @Search OR Definition = @Search", connection);
-		
-		command->Parameters->AddWithValue("@Search", textSearch);
-		// Execute the query and store the result in a DataReader object
-		OleDbDataReader^ reader = command->ExecuteReader();
-
-		// Get the ID of the word
-		int id;
-		while (reader->Read())
-		{
-			id = reader->GetInt32(0);
-		}
-
-		//Creating the OleDBCommand object
-		OleDbCommand^ commandUpdate = gcnew OleDbCommand("UPDATE Table1 SET Word = '" + textWord + "', Definition = '" + textDefinition + "' WHERE ID=@ID", connection);
-		
-		if (textBox3->Text->Length > 0 && textBox2->Text->Length > 0)
-		{
-			///Adding parameters to the command
-			commandUpdate->Parameters->AddWithValue("@ID", id);
-
-			commandUpdate->ExecuteNonQuery();
-			MessageBox::Show("Word successfully edited in dictionary");
-		}
-		else
-		{
-			MessageBox::Show("Empty textbox! Enter a word and definiton.");
-		}
-		
-		//Closing the connection
-		connection->Close();
-
-	}
-	private: System::Void buttonSearch_Click(System::Object^ sender, System::EventArgs^ e) 
-	{
-		String^ textSearch = this->textBox1->Text;
-
-		//Create a connection to the database
-		String^ connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\\Users\\Kinia\\OneDrive\\Pulpit\\Dictionary\\Dictionary\\DataDictionary.accdb";
-		OleDbConnection^ connection = gcnew OleDbConnection(connectionString);
-		connection->Open();
-
-		//Creating the OleDBCommand object
-		OleDbCommand^ command = gcnew OleDbCommand("SELECT Word, Definition FROM Table1 WHERE Word = @Word OR Definition = @Definition", connection);
-
-		//Adding parameters to the command
-		command->Parameters->AddWithValue("@Word", textSearch);
-		command->Parameters->AddWithValue("@Definiton", textSearch);
-
-		//Executing the command and storing the data
-		OleDbDataReader^ reader = command->ExecuteReader();
-
-		if (reader->HasRows)
-		{
-			// Read the record
-			reader->Read();
-
-			if (reader["Word"]->ToString() == textSearch)
-			{
-				// If the word exists, write the definition in the text box
-				textBox2->Text = reader["Word"]->ToString();
-				textBox3->Text = reader["Definition"]->ToString();
-			}
-			else
-			{
-				textBox2->Text = reader["Word"]->ToString();
-				textBox3->Text = reader["Definition"]->ToString();
-			}
-		}
-		else
-		{
-			// If the word doesn't exist, display a message
-			MessageBox::Show("No matching words!");
-		}
-
-		//Closing the connection
-		connection->Close();
-	}
-
-	private: System::Void button1Clean_Click(System::Object^ sender, System::EventArgs^ e) 
-	{
-		textBox1->Clear();
-	}
-	private: System::Void button2Clean_Click(System::Object^ sender, System::EventArgs^ e) 
-	{
-		textBox2->Clear();
-	}
-	private: System::Void button3Clean_Click(System::Object^ sender, System::EventArgs^ e) 
-	{
-		textBox3->Clear();
-	}
 };
 }

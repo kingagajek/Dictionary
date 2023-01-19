@@ -8,61 +8,51 @@ namespace Dictionary {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
-	
 	using namespace System::Data::OleDb;
 
-	/// <summary>
-	/// Podsumowanie informacji o MyForm3
-	/// </summary>
+
 	public ref class MyForm3 : public System::Windows::Forms::Form
 	{
 	public:
 		MyForm3(void)
 		{
 			InitializeComponent();
-			//
-			//TODO: W tym miejscu dodaj kod konstruktora
-			//
 		}
 
 	protected:
-		/// <summary>
-		/// Wyczyœæ wszystkie u¿ywane zasoby.
-		/// </summary>
 		~MyForm3()
 		{
 			if (components)
 			{
 				delete components;
+				delete textBox1;
+				delete buttonAdd;
+				delete buttonBack;
+				delete label1;
+				delete label2;
+				delete textBox2;
+				delete button1Clean;
+				delete button2Clean;
 			}
 		}
-	private: System::Windows::Forms::TextBox^ textBox1;
-	private: System::Windows::Forms::Button^ buttonAdd;
+	private: 
+		System::Windows::Forms::TextBox^ textBox1;
+		System::Windows::Forms::Button^ buttonAdd;
+		System::Windows::Forms::Button^ buttonBack;
+		System::Windows::Forms::Label^ label1;
+		System::Windows::Forms::Label^ label2;
+		System::Windows::Forms::TextBox^ textBox2;
+		System::Windows::Forms::Button^ button1Clean;
+		System::Windows::Forms::Button^ button2Clean;
+		System::ComponentModel::Container^ components;
 
-	private: System::Windows::Forms::Button^ buttonBack;
+		System::Void buttonBack_Click(System::Object^ sender, System::EventArgs^ e);
+		System::Void buttonAdd_Click(System::Object^ sender, System::EventArgs^ e);
+		System::Void button1Clean_Click(System::Object^ sender, System::EventArgs^ e);
+		System::Void button2Clean_Click(System::Object^ sender, System::EventArgs^ e);
 
-
-	private: System::Windows::Forms::Label^ label1;
-	private: System::Windows::Forms::Label^ label2;
-	private: System::Windows::Forms::TextBox^ textBox2;
-	private: System::Windows::Forms::Button^ button1Clean;
-	private: System::Windows::Forms::Button^ button2Clean;
-
-
-
-	protected:
-
-	private:
-		/// <summary>
-		/// Wymagana zmienna projektanta.
-		/// </summary>
-		System::ComponentModel::Container ^components;
 
 #pragma region Windows Form Designer generated code
-		/// <summary>
-		/// Metoda wymagana do obs³ugi projektanta — nie nale¿y modyfikowaæ
-		/// jej zawartoœci w edytorze kodu.
-		/// </summary>
 		void InitializeComponent(void)
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm3::typeid));
@@ -194,69 +184,5 @@ namespace Dictionary {
 
 		}
 #pragma endregion
-	private: System::Void buttonBack_Click(System::Object^ sender, System::EventArgs^ e) 
-	{
-		MyForm3::Close();
-	}
-
-	private: System::Void buttonAdd_Click(System::Object^ sender, System::EventArgs^ e)
-	{
-		// Add the parameter and set the value
-		String^ text1 = this->textBox1->Text;
-		String^ text2 = this->textBox2->Text;
-
-		//Create a connection to the database
-		String^ connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\\Users\\Kinia\\OneDrive\\Pulpit\\Dictionary\\Dictionary\\DataDictionary.accdb";
-		OleDbConnection^ connection = gcnew OleDbConnection(connectionString);
-		connection->Open();
-
-		//Creating the OleDBCommand object
-		OleDbCommand^ command = gcnew OleDbCommand("SELECT Word, Definition FROM Table1 WHERE Word = @Word OR Definition = @Definition", connection);
-
-		//Add the text from the textbox as a parameter to the query
-		command->Parameters->AddWithValue("@Word", text1);
-		command->Parameters->AddWithValue("@Definition", text2);
-		
-		//Executing the command and storing the data
-		OleDbDataReader^ reader = command->ExecuteReader();
-
-		if (textBox1->Text->Length > 0 && textBox2->Text->Length > 0)
-		{
-			if (reader->HasRows)
-			{
-				MessageBox::Show("The word already exists in the dictionary!");
-			}
-			else
-			{
-
-				//Create a cmd object and specify the SQL query
-				OleDbCommand^ cmd = gcnew OleDbCommand("INSERT INTO Table1 (Word, Definition) VALUES (@Word, @Definiton)", connection);
-				//Add the text from the textbox as a parameter to the query
-				cmd->Parameters->AddWithValue("@Word", text1);
-				cmd->Parameters->AddWithValue("@Definition", text2);
-				//Execute the query
-				cmd->ExecuteNonQuery();
-				String^ successDialog = "'" + text1 + "' successfully added to dictionary!";
-				MessageBox::Show(successDialog, "Success");
-			}
-		}
-		else
-		{
-			MessageBox::Show("Empty textbox! Enter a word and definiton.");
-		}
-
-		//Close the connection
-		connection->Close();
-
-	}
-
-	private: System::Void button1Clean_Click(System::Object^ sender, System::EventArgs^ e) 
-	{
-		textBox1->Clear();
-	}
-	private: System::Void button2Clean_Click(System::Object^ sender, System::EventArgs^ e) 
-	{
-		textBox2->Clear();
-	}
 };
 }

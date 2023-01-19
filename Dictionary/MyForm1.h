@@ -22,20 +22,20 @@ namespace Dictionary {
 		MyForm1(void)
 		{
 			InitializeComponent();
-			//
-			//TODO: W tym miejscu dodaj kod konstruktora
-			//
 		}
 
 	protected:
-		/// <summary>
-		/// Wyczyœæ wszystkie u¿ywane zasoby.
-		/// </summary>
 		~MyForm1()
 		{
 			if (components)
 			{
 				delete components;
+				delete label1;
+				delete buttonSearch;
+				delete buttonAdd;
+				delete buttonDelete;
+				delete buttonEdit;
+				delete buttonExit;
 			}
 		}
 	private:
@@ -46,13 +46,15 @@ namespace Dictionary {
 		System::Windows::Forms::Button^ buttonEdit;
 		System::Windows::Forms::Button^ buttonExit;
 		System::ComponentModel::Container^ components;
+
+		System::Void buttonSearch_Click(System::Object^ sender, System::EventArgs^ e);
+		System::Void buttonAdd_Click(System::Object^ sender, System::EventArgs^ e);
+		System::Void buttonDelete_Click(System::Object^ sender, System::EventArgs^ e);
+		System::Void buttonEdit_Click(System::Object^ sender, System::EventArgs^ e);
+		System::Void buttonExit_Click(System::Object^ sender, System::EventArgs^ e);
 		
 
 #pragma region Windows Form Designer generated code
-		/// <summary>
-		/// Metoda wymagana do obs³ugi projektanta — nie nale¿y modyfikowaæ
-		/// jej zawartoœci w edytorze kodu.
-		/// </summary>
 		void InitializeComponent(void)
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm1::typeid));
@@ -182,30 +184,6 @@ namespace Dictionary {
 
 		}
 #pragma endregion
-	private: System::Void buttonSearch_Click(System::Object^ sender, System::EventArgs^ e)
-	{
-		MyForm2^ myform2 = gcnew MyForm2;
-		//MyForm1::Hide();
-		myform2->ShowDialog();
-	}
-	private: System::Void buttonAdd_Click(System::Object^ sender, System::EventArgs^ e)
-	{
-		MyForm3^ myform3 = gcnew MyForm3;
-		myform3->ShowDialog();
-	}
-	private: System::Void buttonDelete_Click(System::Object^ sender, System::EventArgs^ e)
-	{
-		MyForm4^ myform4 = gcnew MyForm4;
-		myform4->ShowDialog();
-	}
-	private: System::Void buttonEdit_Click(System::Object^ sender, System::EventArgs^ e)
-	{
-		MyForm5^ myform5 = gcnew MyForm5;
-		myform5->ShowDialog();
-	}
-	private: System::Void buttonExit_Click(System::Object^ sender, System::EventArgs^ e)
-	{
-		MyForm1::Close();
-	}
+
 };
 }

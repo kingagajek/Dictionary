@@ -8,54 +8,42 @@ namespace Dictionary {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
-
 	using namespace Data::OleDb;
 
-	/// <summary>
-	/// Podsumowanie informacji o MyForm4
-	/// </summary>
 	public ref class MyForm4 : public System::Windows::Forms::Form
 	{
 	public:
 		MyForm4(void)
 		{
 			InitializeComponent();
-			//
-			//TODO: W tym miejscu dodaj kod konstruktora
-			//
 		}
 
 	protected:
-		/// <summary>
-		/// Wyczyœæ wszystkie u¿ywane zasoby.
-		/// </summary>
 		~MyForm4()
 		{
 			if (components)
 			{
 				delete components;
+				delete label1;
+				delete textBox1;
+				delete buttonDelete;
+				delete buttonBack;
+				delete button1Clean;
 			}
 		}
-	private: System::Windows::Forms::Label^ label1;
-	private: System::Windows::Forms::TextBox^ textBox1;
-	private: System::Windows::Forms::Button^ buttonDelete;
-	private: System::Windows::Forms::Button^ buttonBack;
-	private: System::Windows::Forms::Button^ button1Clean;
-
-
-	protected:
-
 	private:
-		/// <summary>
-		/// Wymagana zmienna projektanta.
-		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::Windows::Forms::Label^ label1;
+		System::Windows::Forms::TextBox^ textBox1;
+		System::Windows::Forms::Button^ buttonDelete;
+		System::Windows::Forms::Button^ buttonBack;
+		System::Windows::Forms::Button^ button1Clean;
+		System::ComponentModel::Container^ components;
+
+		System::Void buttonBack_Click(System::Object^ sender, System::EventArgs^ e);
+		System::Void buttonDelete_Click(System::Object^ sender, System::EventArgs^ e);
+		System::Void button1Clean_Click(System::Object^ sender, System::EventArgs^ e);
 
 #pragma region Windows Form Designer generated code
-		/// <summary>
-		/// Metoda wymagana do obs³ugi projektanta — nie nale¿y modyfikowaæ
-		/// jej zawartoœci w edytorze kodu.
-		/// </summary>
 		void InitializeComponent(void)
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm4::typeid));
@@ -150,62 +138,5 @@ namespace Dictionary {
 
 		}
 #pragma endregion
-	private: System::Void buttonBack_Click(System::Object^ sender, System::EventArgs^ e) 
-	{
-		MyForm4::Close();
-	}
-
-	private: System::Void buttonDelete_Click(System::Object^ sender, System::EventArgs^ e) 
-	{
-		String^ text = this->textBox1->Text;
-
-		//Create a connection to the database
-		String^ connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\\Users\\Kinia\\OneDrive\\Pulpit\\Dictionary\\Dictionary\\DataDictionary.accdb";
-		OleDbConnection^ connection = gcnew OleDbConnection(connectionString);
-		connection->Open();
-
-		
-		//Creating the OleDBCommand object
-		OleDbCommand^ cmd = gcnew OleDbCommand("SELECT Word, Definition FROM Table1 WHERE Word = @Word OR Definition = @Definition", connection);
-
-		//Add the text from the textbox as a parameter to the query
-		cmd->Parameters->AddWithValue("@Word", text);
-		cmd->Parameters->AddWithValue("@Definition", text);
-
-		//Executing the command and storing the data
-		OleDbDataReader^ reader = cmd->ExecuteReader();
-
-		if (textBox1->Text->Length > 0)
-		{
-			if (reader->HasRows)
-			{
-				//Creating the OleDBCommand object
-				OleDbCommand^ command = gcnew OleDbCommand("DELETE Word, Definition FROM Table1 WHERE Word = @Word OR Definition = @Definition", connection);
-
-				//Adding parameters to the command
-				command->Parameters->AddWithValue("@Word", text);
-				command->Parameters->AddWithValue("@Definiton", text);
-				command->ExecuteNonQuery();
-				//Notify the user that the word is deleted
-				MessageBox::Show("Word successfully deleted from dictionary!");
-			}
-			else
-			{
-				MessageBox::Show("There is no such word in the dictionary!");
-			}
-		}
-		else
-		{
-			MessageBox::Show("Empty textbox! Enter a word and definiton.");
-		}
-
-		connection->Close();
-
-
-	}
-	private: System::Void button1Clean_Click(System::Object^ sender, System::EventArgs^ e)
-	{
-		textBox1->Clear();
-	}
 };
 }

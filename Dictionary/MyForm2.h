@@ -8,57 +8,46 @@ namespace Dictionary {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
-
 	using namespace System::Data::OleDb;
 
-	/// <summary>
-	/// Podsumowanie informacji o MyForm2
-	/// </summary>
+
 	public ref class MyForm2 : public System::Windows::Forms::Form
 	{
 	public:
 		MyForm2(void)
 		{
 			InitializeComponent();
-			//
-			//TODO: W tym miejscu dodaj kod konstruktora
-			//
 		}
 
 	protected:
-		/// <summary>
-		/// Wyczyœæ wszystkie u¿ywane zasoby.
-		/// </summary>
 		~MyForm2()
 		{
 			if (components)
 			{
 				delete components;
+				delete textBox1;
+				delete label1;
+				delete buttonSearch;
+				delete buttonBack;
+				delete textBox2;
+				delete button1Clear;
 			}
 		}
-	private: System::Windows::Forms::TextBox^ textBox1;
-	private: System::Windows::Forms::Label^ label1;
-	private: System::Windows::Forms::Button^ buttonSearch;
-	private: System::Windows::Forms::Button^ buttonBack;
-
-	private: System::Windows::Forms::TextBox^ textBox2;
-	private: System::Windows::Forms::Button^ button1Clear;
-
-
-
-	protected:
-
 	private:
-		/// <summary>
-		/// Wymagana zmienna projektanta.
-		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::Windows::Forms::TextBox^ textBox1;
+		System::Windows::Forms::Label^ label1;
+		System::Windows::Forms::Button^ buttonSearch;
+		System::Windows::Forms::Button^ buttonBack;
+		System::Windows::Forms::TextBox^ textBox2;
+		System::Windows::Forms::Button^ button1Clear;
+		System::ComponentModel::Container^ components;
+
+		System::Void buttonBack_Click(System::Object^ sender, System::EventArgs^ e);
+		System::Void buttonSearch_Click(System::Object^ sender, System::EventArgs^ e);
+		System::Void button1Clear_Click(System::Object^ sender, System::EventArgs^ e);
+
 
 #pragma region Windows Form Designer generated code
-		/// <summary>
-		/// Metoda wymagana do obs³ugi projektanta — nie nale¿y modyfikowaæ
-		/// jej zawartoœci w edytorze kodu.
-		/// </summary>
 		void InitializeComponent(void)
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm2::typeid));
@@ -164,57 +153,5 @@ namespace Dictionary {
 
 		}
 #pragma endregion
-	private: System::Void buttonBack_Click(System::Object^ sender, System::EventArgs^ e) 
-	{
-		MyForm2::Close();
-	}
-
-	private: System::Void buttonSearch_Click(System::Object^ sender, System::EventArgs^ e) {
-		
-		String^ textSearch = this->textBox1->Text;
-
-		//Create a connection to the database
-		String^ connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\\Users\\Kinia\\OneDrive\\Pulpit\\Dictionary\\Dictionary\\DataDictionary.accdb";
-		OleDbConnection^ connection = gcnew OleDbConnection(connectionString);
-		connection->Open();
-
-		//Creating the OleDBCommand object
-		OleDbCommand^ command = gcnew OleDbCommand("SELECT Word, Definition FROM Table1 WHERE Word = @Word OR Definition = @Definition", connection);
-
-		//Adding parameters to the command
-		command->Parameters->AddWithValue("@Word", textSearch);
-		command->Parameters->AddWithValue("@Definiton", textSearch);
-
-		//Executing the command and storing the data
-		OleDbDataReader^ reader = command->ExecuteReader();
-
-		if (reader->HasRows)
-		{
-			// Read the record
-			reader->Read();
-
-			if (reader["Word"]->ToString() == textSearch)
-			{
-				// If the word exists, write the definition in the text box
-				textBox2->Text = reader["Definition"]->ToString();
-			}
-			else
-			{
-				textBox2->Text = reader["Word"]->ToString();
-			}
-		}
-		else
-		{
-			// If the word doesn't exist, display a message
-			MessageBox::Show("No matching words!");
-		}
-
-		//Closing the connection
-		connection->Close();
-	}
-	private: System::Void button1Clear_Click(System::Object^ sender, System::EventArgs^ e) 
-	{
-	textBox1->Clear();
-	}
 };
 }
