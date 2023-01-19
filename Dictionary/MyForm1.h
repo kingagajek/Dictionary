@@ -38,24 +38,15 @@ namespace Dictionary {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::Label^ label1;
-	private: System::Windows::Forms::Button^ buttonSearch;
-	private: System::Windows::Forms::Button^ buttonAdd;
-	private: System::Windows::Forms::Button^ buttonDelete;
-	private: System::Windows::Forms::Button^ buttonEdit;
-	private: System::Windows::Forms::Button^ buttonExit;
-
-
-
-
-
-	protected:
-
 	private:
-		/// <summary>
-		/// Wymagana zmienna projektanta.
-		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::Windows::Forms::Label^ label1;
+		System::Windows::Forms::Button^ buttonSearch;
+		System::Windows::Forms::Button^ buttonAdd;
+		System::Windows::Forms::Button^ buttonDelete;
+		System::Windows::Forms::Button^ buttonEdit;
+		System::Windows::Forms::Button^ buttonExit;
+		System::ComponentModel::Container^ components;
+		
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -86,7 +77,6 @@ namespace Dictionary {
 			this->label1->Size = System::Drawing::Size(240, 75);
 			this->label1->TabIndex = 0;
 			this->label1->Text = L"MENU";
-			this->label1->Click += gcnew System::EventHandler(this, &MyForm1::label1_Click);
 			// 
 			// buttonSearch
 			// 
@@ -187,34 +177,34 @@ namespace Dictionary {
 			this->Name = L"MyForm1";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Dictionary";
-			this->Load += gcnew System::EventHandler(this, &MyForm1::MyForm1_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
-	private: System::Void MyForm1_Load(System::Object^ sender, System::EventArgs^ e) {
-	}
-	private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {
-	}
-	private: System::Void buttonSearch_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void buttonSearch_Click(System::Object^ sender, System::EventArgs^ e)
+	{
 		MyForm2^ myform2 = gcnew MyForm2;
 		//MyForm1::Hide();
 		myform2->ShowDialog();
 	}
-	private: System::Void buttonAdd_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void buttonAdd_Click(System::Object^ sender, System::EventArgs^ e)
+	{
 		MyForm3^ myform3 = gcnew MyForm3;
 		myform3->ShowDialog();
 	}
-	private: System::Void buttonDelete_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void buttonDelete_Click(System::Object^ sender, System::EventArgs^ e)
+	{
 		MyForm4^ myform4 = gcnew MyForm4;
 		myform4->ShowDialog();
 	}
-	private: System::Void buttonEdit_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void buttonEdit_Click(System::Object^ sender, System::EventArgs^ e)
+	{
 		MyForm5^ myform5 = gcnew MyForm5;
 		myform5->ShowDialog();
 	}
-	private: System::Void buttonExit_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void buttonExit_Click(System::Object^ sender, System::EventArgs^ e)
+	{
 		MyForm1::Close();
 	}
 };

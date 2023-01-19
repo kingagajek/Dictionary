@@ -1,8 +1,5 @@
 #pragma once
 
-#include <Windows.h>
-//#include <System.Windows.Forms.h>
-
 namespace Dictionary {
 
 	using namespace System;
@@ -11,6 +8,8 @@ namespace Dictionary {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+
+	using namespace System::Data::OleDb;
 
 	/// <summary>
 	/// Podsumowanie informacji o MyForm2
@@ -41,7 +40,10 @@ namespace Dictionary {
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::Button^ buttonSearch;
 	private: System::Windows::Forms::Button^ buttonBack;
-	private: System::Windows::Forms::Label^ label2;
+
+	private: System::Windows::Forms::TextBox^ textBox2;
+	private: System::Windows::Forms::Button^ button1Clear;
+
 
 
 	protected:
@@ -64,7 +66,8 @@ namespace Dictionary {
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->buttonSearch = (gcnew System::Windows::Forms::Button());
 			this->buttonBack = (gcnew System::Windows::Forms::Button());
-			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
+			this->button1Clear = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// textBox1
@@ -121,14 +124,24 @@ namespace Dictionary {
 			this->buttonBack->UseVisualStyleBackColor = false;
 			this->buttonBack->Click += gcnew System::EventHandler(this, &MyForm2::buttonBack_Click);
 			// 
-			// label2
+			// textBox2
 			// 
-			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(21, 187);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(44, 16);
-			this->label2->TabIndex = 4;
-			this->label2->Text = L"label2";
+			this->textBox2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 19.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(238)));
+			this->textBox2->Location = System::Drawing::Point(12, 188);
+			this->textBox2->Name = L"textBox2";
+			this->textBox2->Size = System::Drawing::Size(398, 45);
+			this->textBox2->TabIndex = 5;
+			// 
+			// button1Clear
+			// 
+			this->button1Clear->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button1Clear.Image")));
+			this->button1Clear->Location = System::Drawing::Point(367, 89);
+			this->button1Clear->Name = L"button1Clear";
+			this->button1Clear->Size = System::Drawing::Size(45, 45);
+			this->button1Clear->TabIndex = 6;
+			this->button1Clear->UseVisualStyleBackColor = true;
+			this->button1Clear->Click += gcnew System::EventHandler(this, &MyForm2::button1Clear_Click);
 			// 
 			// MyForm2
 			// 
@@ -136,7 +149,8 @@ namespace Dictionary {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->ClientSize = System::Drawing::Size(582, 553);
-			this->Controls->Add(this->label2);
+			this->Controls->Add(this->button1Clear);
+			this->Controls->Add(this->textBox2);
 			this->Controls->Add(this->buttonBack);
 			this->Controls->Add(this->buttonSearch);
 			this->Controls->Add(this->label1);
@@ -150,73 +164,57 @@ namespace Dictionary {
 
 		}
 #pragma endregion
-	private: System::Void buttonBack_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void buttonBack_Click(System::Object^ sender, System::EventArgs^ e) 
+	{
 		MyForm2::Close();
 	}
+
 	private: System::Void buttonSearch_Click(System::Object^ sender, System::EventArgs^ e) {
-		/*
-		// Get the text from the TextBox.
-		System::String^ text = textBox1->Text;
+		
+		String^ textSearch = this->textBox1->Text;
 
-		// Search for the word in the file.
-		System::String^ result = SearchForWord(text);
+		//Create a connection to the database
+		String^ connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\\Users\\Kinia\\OneDrive\\Pulpit\\Dictionary\\Dictionary\\DataDictionary.accdb";
+		OleDbConnection^ connection = gcnew OleDbConnection(connectionString);
+		connection->Open();
 
-		// Display the result in the label.
-		label2->Text = result; */
+		//Creating the OleDBCommand object
+		OleDbCommand^ command = gcnew OleDbCommand("SELECT Word, Definition FROM Table1 WHERE Word = @Word OR Definition = @Definition", connection);
 
-		String^ word;
-		// Get the word entered in the TextBox
-		word = textBox1->Text;
+		//Adding parameters to the command
+		command->Parameters->AddWithValue("@Word", textSearch);
+		command->Parameters->AddWithValue("@Definiton", textSearch);
 
-		// Read the dictionary file line by line
-		System::IO::StreamReader^ sr = gcnew System::IO::StreamReader("DataDictionary.txt");
-		String^ line;
+		//Executing the command and storing the data
+		OleDbDataReader^ reader = command->ExecuteReader();
 
-		// Search for the word in the dictionary
-		while ((line = sr->ReadLine()) != nullptr)
+		if (reader->HasRows)
 		{
-			// If the word is found, display a message
-			if (line->Contains(word))
+			// Read the record
+			reader->Read();
+
+			if (reader["Word"]->ToString() == textSearch)
 			{
-				MessageBox::Show("Word found in dictionary");
-				break;
-			}
-		}
-
-		// If the word is not found, display a message
-		if (line == nullptr)
-			MessageBox::Show("Word not found in dictionary");
-
-		// Close the StreamReader
-		delete sr;
-
-	}
-
-	    System::String^ SearchForWord(System::String^ text)
-    {
-        // Open the file and search for the word.
-        // (Implementation omitted for brevity)
-//Open the file using a StreamReader
-			/*
-			System::IO::StreamReader^ sr = gcnew System::IO::StreamReader("DataDictionary.txt");
-
-			//Read the file contents into a string
-			String^ fileContents = sr->ReadToEnd();
-
-			//Search for the word
-			int index = fileContents->IndexOf("word");
-
-			//Check if the word was found
-			if (index >= 0)
-			{
-				return "Word was found";
+				// If the word exists, write the definition in the text box
+				textBox2->Text = reader["Definition"]->ToString();
 			}
 			else
 			{
-				return "Word was not found";
-			} */
-			return "koniec";
-			
-    }
+				textBox2->Text = reader["Word"]->ToString();
+			}
+		}
+		else
+		{
+			// If the word doesn't exist, display a message
+			MessageBox::Show("No matching words!");
+		}
+
+		//Closing the connection
+		connection->Close();
+	}
+	private: System::Void button1Clear_Click(System::Object^ sender, System::EventArgs^ e) 
+	{
+	textBox1->Clear();
+	}
 };
 }

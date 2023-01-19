@@ -9,6 +9,8 @@ namespace Dictionary {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
+	using namespace Data::OleDb;
+
 	/// <summary>
 	/// Podsumowanie informacji o MyForm4
 	/// </summary>
@@ -38,6 +40,7 @@ namespace Dictionary {
 	private: System::Windows::Forms::TextBox^ textBox1;
 	private: System::Windows::Forms::Button^ buttonDelete;
 	private: System::Windows::Forms::Button^ buttonBack;
+	private: System::Windows::Forms::Button^ button1Clean;
 
 
 	protected:
@@ -60,6 +63,7 @@ namespace Dictionary {
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->buttonDelete = (gcnew System::Windows::Forms::Button());
 			this->buttonBack = (gcnew System::Windows::Forms::Button());
+			this->button1Clean = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// label1
@@ -82,7 +86,6 @@ namespace Dictionary {
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->Size = System::Drawing::Size(398, 45);
 			this->textBox1->TabIndex = 3;
-			this->textBox1->TextChanged += gcnew System::EventHandler(this, &MyForm4::textBox1_TextChanged);
 			// 
 			// buttonDelete
 			// 
@@ -117,12 +120,23 @@ namespace Dictionary {
 			this->buttonBack->UseVisualStyleBackColor = false;
 			this->buttonBack->Click += gcnew System::EventHandler(this, &MyForm4::buttonBack_Click);
 			// 
+			// button1Clean
+			// 
+			this->button1Clean->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button1Clean.Image")));
+			this->button1Clean->Location = System::Drawing::Point(367, 89);
+			this->button1Clean->Name = L"button1Clean";
+			this->button1Clean->Size = System::Drawing::Size(45, 45);
+			this->button1Clean->TabIndex = 16;
+			this->button1Clean->UseVisualStyleBackColor = true;
+			this->button1Clean->Click += gcnew System::EventHandler(this, &MyForm4::button1Clean_Click);
+			// 
 			// MyForm4
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->ClientSize = System::Drawing::Size(582, 553);
+			this->Controls->Add(this->button1Clean);
 			this->Controls->Add(this->buttonBack);
 			this->Controls->Add(this->buttonDelete);
 			this->Controls->Add(this->textBox1);
@@ -136,13 +150,62 @@ namespace Dictionary {
 
 		}
 #pragma endregion
-	private: System::Void buttonBack_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void buttonBack_Click(System::Object^ sender, System::EventArgs^ e) 
+	{
 		MyForm4::Close();
 	}
-private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 
-}
-	private: System::Void buttonDelete_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void buttonDelete_Click(System::Object^ sender, System::EventArgs^ e) 
+	{
+		String^ text = this->textBox1->Text;
+
+		//Create a connection to the database
+		String^ connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\\Users\\Kinia\\OneDrive\\Pulpit\\Dictionary\\Dictionary\\DataDictionary.accdb";
+		OleDbConnection^ connection = gcnew OleDbConnection(connectionString);
+		connection->Open();
+
+		
+		//Creating the OleDBCommand object
+		OleDbCommand^ cmd = gcnew OleDbCommand("SELECT Word, Definition FROM Table1 WHERE Word = @Word OR Definition = @Definition", connection);
+
+		//Add the text from the textbox as a parameter to the query
+		cmd->Parameters->AddWithValue("@Word", text);
+		cmd->Parameters->AddWithValue("@Definition", text);
+
+		//Executing the command and storing the data
+		OleDbDataReader^ reader = cmd->ExecuteReader();
+
+		if (textBox1->Text->Length > 0)
+		{
+			if (reader->HasRows)
+			{
+				//Creating the OleDBCommand object
+				OleDbCommand^ command = gcnew OleDbCommand("DELETE Word, Definition FROM Table1 WHERE Word = @Word OR Definition = @Definition", connection);
+
+				//Adding parameters to the command
+				command->Parameters->AddWithValue("@Word", text);
+				command->Parameters->AddWithValue("@Definiton", text);
+				command->ExecuteNonQuery();
+				//Notify the user that the word is deleted
+				MessageBox::Show("Word successfully deleted from dictionary!");
+			}
+			else
+			{
+				MessageBox::Show("There is no such word in the dictionary!");
+			}
+		}
+		else
+		{
+			MessageBox::Show("Empty textbox! Enter a word and definiton.");
+		}
+
+		connection->Close();
+
+
+	}
+	private: System::Void button1Clean_Click(System::Object^ sender, System::EventArgs^ e)
+	{
+		textBox1->Clear();
 	}
 };
 }

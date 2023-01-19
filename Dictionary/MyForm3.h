@@ -1,10 +1,5 @@
 #pragma once
 
-#include <msclr\marshal_cppstd.h>
-#include <fstream>
-#include <string>
-#include <windows.h>
-
 namespace Dictionary {
 
 	using namespace System;
@@ -50,6 +45,10 @@ namespace Dictionary {
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::TextBox^ textBox2;
+	private: System::Windows::Forms::Button^ button1Clean;
+	private: System::Windows::Forms::Button^ button2Clean;
+
+
 
 	protected:
 
@@ -73,6 +72,8 @@ namespace Dictionary {
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
+			this->button1Clean = (gcnew System::Windows::Forms::Button());
+			this->button2Clean = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// textBox1
@@ -83,7 +84,6 @@ namespace Dictionary {
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->Size = System::Drawing::Size(398, 45);
 			this->textBox1->TabIndex = 1;
-			this->textBox1->TextChanged += gcnew System::EventHandler(this, &MyForm3::textBox1_TextChanged);
 			// 
 			// buttonAdd
 			// 
@@ -151,12 +151,34 @@ namespace Dictionary {
 			this->textBox2->Size = System::Drawing::Size(398, 45);
 			this->textBox2->TabIndex = 7;
 			// 
+			// button1Clean
+			// 
+			this->button1Clean->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button1Clean.Image")));
+			this->button1Clean->Location = System::Drawing::Point(367, 89);
+			this->button1Clean->Name = L"button1Clean";
+			this->button1Clean->Size = System::Drawing::Size(45, 45);
+			this->button1Clean->TabIndex = 8;
+			this->button1Clean->UseVisualStyleBackColor = true;
+			this->button1Clean->Click += gcnew System::EventHandler(this, &MyForm3::button1Clean_Click);
+			// 
+			// button2Clean
+			// 
+			this->button2Clean->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button2Clean.Image")));
+			this->button2Clean->Location = System::Drawing::Point(367, 232);
+			this->button2Clean->Name = L"button2Clean";
+			this->button2Clean->Size = System::Drawing::Size(45, 45);
+			this->button2Clean->TabIndex = 9;
+			this->button2Clean->UseVisualStyleBackColor = true;
+			this->button2Clean->Click += gcnew System::EventHandler(this, &MyForm3::button2Clean_Click);
+			// 
 			// MyForm3
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
 			this->ClientSize = System::Drawing::Size(582, 553);
+			this->Controls->Add(this->button2Clean);
+			this->Controls->Add(this->button1Clean);
 			this->Controls->Add(this->textBox2);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
@@ -172,28 +194,13 @@ namespace Dictionary {
 
 		}
 #pragma endregion
-	private: System::IO::StreamWriter^ sw;
-	private: System::Void buttonBack_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void buttonBack_Click(System::Object^ sender, System::EventArgs^ e) 
+	{
 		MyForm3::Close();
 	}
 
-	private: System::Void buttonAdd_Click(System::Object^ sender, System::EventArgs^ e) {
-
-		/*
-		std::string word = msclr::interop::marshal_as<std::string>(textBox1->Text);
-
-		//open file in append mode
-		std::ofstream dictFile;
-		dictFile.open("DataDictionary.txt", std::ios::app);
-
-		//write word to file
-		dictFile << word << "\n";
-
-		//close file
-		dictFile.close();
-
-		MessageBox::Show("Word successfully added to dictionary!", "Success"); */
-
+	private: System::Void buttonAdd_Click(System::Object^ sender, System::EventArgs^ e)
+	{
 		// Add the parameter and set the value
 		String^ text1 = this->textBox1->Text;
 		String^ text2 = this->textBox2->Text;
@@ -203,27 +210,53 @@ namespace Dictionary {
 		OleDbConnection^ connection = gcnew OleDbConnection(connectionString);
 		connection->Open();
 
-		//Create a command object and specify the SQL query
-		OleDbCommand^ command = gcnew OleDbCommand("INSERT INTO Table1 (Word, Definition) VALUES (@Word, @Definiton)", connection);
-
+		//Creating the OleDBCommand object
+		OleDbCommand^ command = gcnew OleDbCommand("SELECT Word, Definition FROM Table1 WHERE Word = @Word OR Definition = @Definition", connection);
 
 		//Add the text from the textbox as a parameter to the query
 		command->Parameters->AddWithValue("@Word", text1);
 		command->Parameters->AddWithValue("@Definition", text2);
+		
+		//Executing the command and storing the data
+		OleDbDataReader^ reader = command->ExecuteReader();
 
-		//Execute the query
-		command->ExecuteNonQuery();
+		if (textBox1->Text->Length > 0 && textBox2->Text->Length > 0)
+		{
+			if (reader->HasRows)
+			{
+				MessageBox::Show("The word already exists in the dictionary!");
+			}
+			else
+			{
+
+				//Create a cmd object and specify the SQL query
+				OleDbCommand^ cmd = gcnew OleDbCommand("INSERT INTO Table1 (Word, Definition) VALUES (@Word, @Definiton)", connection);
+				//Add the text from the textbox as a parameter to the query
+				cmd->Parameters->AddWithValue("@Word", text1);
+				cmd->Parameters->AddWithValue("@Definition", text2);
+				//Execute the query
+				cmd->ExecuteNonQuery();
+				String^ successDialog = "'" + text1 + "' successfully added to dictionary!";
+				MessageBox::Show(successDialog, "Success");
+			}
+		}
+		else
+		{
+			MessageBox::Show("Empty textbox! Enter a word and definiton.");
+		}
 
 		//Close the connection
 		connection->Close();
-		String^ successDialog = "'" + text1 + "' successfully added to dictionary!";
-		MessageBox::Show(successDialog, "Success");
-		//MessageBox::Show("Word successfully added to dictionary!", "Success");
 
 	}
-	private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+
+	private: System::Void button1Clean_Click(System::Object^ sender, System::EventArgs^ e) 
+	{
+		textBox1->Clear();
 	}
-	private: System::Void label2_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void button2Clean_Click(System::Object^ sender, System::EventArgs^ e) 
+	{
+		textBox2->Clear();
 	}
 };
 }
